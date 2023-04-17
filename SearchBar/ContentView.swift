@@ -28,7 +28,10 @@ struct ContentView: View {
             // Iterate over orrignal array
             for item in items {
                 if item.contains(searchText) {
-                    matchingItems.append(item)
+                    if item.lowercased().contains(searchText.lowercased()){
+                        matchingItems.append(item)
+                    }
+                    
                 }
             }
             return matchingItems
