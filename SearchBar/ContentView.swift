@@ -8,15 +8,50 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+    
+    //The list of items to show
+    @State var items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+    
+    // The search term the user has provided
+    @State var searchText = ""
+    
+    var filteredItems: [String] {
+        
+        if searchText.isEmpty {
+            
+            return items 
+        } else {
+            
+            // Create an empty array
+            var matchingItems: [String] = []
+            
+            // Iterate over orrignal array
+            for item in items {
+                if item.contains(searchText) {
+                    matchingItems.append(item)
+                }
+            }
+            return matchingItems
         }
-        .padding()
     }
+    var body: some View {
+        
+        NavigationView{
+            
+            VStack {
+                
+                Text("Searching on: \(searchText)")
+                List(filteredItems, id: \.self) { currentItem in Text(currentItem)
+                            }
+                            .searchable(text: $searchText)
+            }
+            
+            
+            
+        }
+        
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
